@@ -209,34 +209,39 @@ function gatherInputs() {
 function generateWorkData(inputs) {
     let days = inputs.days;
     
-    // 1. Initial Fill & Rules
     days.forEach(d => {
-        // Defaults
+        d.data = {}; // Reset ข้อมูลเก่า
+
+        // 1. ใส่ค่า Checkbox งานวิชาการ (3.x) ให้เป็น 1 ทันที (ล็อกค่าไว้)
+        if(d.soap) d.data['3.1'] = 1;
+        if(d.jc) d.data['3.2'] = 1;
+        if(d.intro) d.data['3.3'] = 1;
+        if(d.teach) d.data['3.4'] = 1;
+        if(d.sum) d.data['3.5'] = 1;
+
+        // 2. สุ่มตัวเลขงานบริการ (2.x) ตามปกติ
         for(let [tid, conf] of Object.entries(TASKS)) {
-            if(conf.default) d.data[tid] = getRandom(conf.min, conf.max);
-            else d.data[tid] = 0;
+            // ทำเฉพาะข้อที่ขึ้นต้นด้วย 2 (งานบริการ)
+            if(tid.startsWith('2')) {
+                if(conf.default) d.data[tid] = getRandom(conf.min, conf.max);
+                else d.data[tid] = 0;
+            }
         }
 
-        // Location specific
+        // เพิ่มงานตามหน้าที่พิเศษ (Location)
         if(d.loc === 'floor2') { d.data['2.1'] = getRandom(40,70); d.data['2.2'] = getRandom(40,70); }
         if(d.loc === 'bigDispense') { d.data['2.1'] = getRandom(40,70); }
         if(d.loc === 'helper') { d.data['2.2'] = getRandom(40,70); }
 
-        // Day specific
-        if(d.dow === 3) d.data['2.12'] = getRandom(16,20); // Wed HIV
-        if(d.dow === 4) { d.data['2.9'] = getRandom(1,3); d.data['2.11'] = getRandom(7,10); } // Thu TB/Asthma
+        // เพิ่มงานตามวัน (Day specific)
+        if(d.dow === 3) d.data['2.12'] = getRandom(16,20); // พุธ HIV
+        if(d.dow === 4) { d.data['2.9'] = getRandom(1,3); d.data['2.11'] = getRandom(7,10); } // พฤหัส TB/Asthma
 
-        // Academic
-        if(d.soap) d.data['3.1'] = 1;
-        if(d.jc) d.data['3.2'] = 1;
-        if(d.teach) d.data['3.4'] = 1;
-        if(d.intro) d.data['3.3'] = 1;
-        if(d.sum) d.data['3.5'] = 1;
-
+        // 3. ตรวจสอบเวลาไม่ให้เกิน 420 นาที (โดยไม่แตะต้องงานวิชาการ)
         enforceTimeLimit(d);
     });
 
-    // 2. Balance Score
+    // 4. เกลี่ยคะแนนรวมให้ได้ตามเป้า
     balanceScore(days, inputs.target);
     return days;
 }
@@ -244,12 +249,27 @@ function generateWorkData(inputs) {
 function enforceTimeLimit(dayObj) {
     let limit = 420;
     let safety = 0;
-    while(calcMins(dayObj.data) > limit && safety < 1000) {
-        let keys = Object.keys(dayObj.data).filter(k => dayObj.data[k] > 0);
-        if(keys.length) {
+    
+    // คำนวณเวลาปัจจุบัน
+    let currentMins = calcMins(dayObj.data);
+
+    while(currentMins > limit && safety < 1000) {
+        // *** แก้ไขจุดนี้: เลือกเฉพาะ key ที่ขึ้นต้นด้วย '2' (งานบริการ) เท่านั้น ***
+        // เพื่อป้องกันไม่ให้งานวิชาการ (3.x) ถูกลบ
+        let keys = Object.keys(dayObj.data).filter(k => 
+            dayObj.data[k] > 0 && k.startsWith('2')
+        );
+
+        if(keys.length > 0) {
+            // สุ่มลดงานบริการลงทีละ 1
             let k = keys[Math.floor(Math.random() * keys.length)];
             dayObj.data[k]--;
+        } else {
+            // ถ้าไม่มีงานบริการให้ลดแล้ว (แต่เวลายังเกิน) ก็ต้องยอมหยุด เพื่อรักษางานวิชาการไว้
+            break;
         }
+        
+        currentMins = calcMins(dayObj.data);
         safety++;
     }
 }
