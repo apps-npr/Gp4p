@@ -1,58 +1,97 @@
-
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<title>P4P Ambulatory Care – Final v2</title>
-<link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P4P Pharmacist Calculator</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="bg-pink-50 min-h-screen pb-24">
 
-<h1>P4P Ambulatory Care (Final v2)</h1>
+    <div class="max-w-5xl mx-auto p-4 md:p-8">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-pink-600">💊 P4P Smart Calculator</h1>
+            <p class="text-gray-500 mt-2">ระบบคำนวณภาระงานและออกรายงาน Excel อัตโนมัติ</p>
+        </div>
 
-<section class="header">
-<label>ผู้ปฏิบัติงาน</label>
-<select id="staff">
-<option>ภญ.นิตยา ภาพสมุทร</option>
-<option>ภญ.รัตติยาพร แก้วสุ</option>
-<option>ภญ.จิราพร คำแก้ว</option>
-<option>ภญ.อัจฉรา ภัทรสมสกุล</option>
-<option>ภญ.อาทิตยา วงศาโรจน์</option>
-<option>ภญ.จุติพร ร่วมใจ</option>
-<option>ภก.กันตพงศ์ วงศ์เอนกเกษม</option>
-<option value="">พิมพ์เอง</option>
-</select>
-<input id="staffCustom" placeholder="ชื่ออื่น">
+        <div class="bg-white rounded-2xl shadow-sm p-6 mb-6 border-l-4 border-pink-400">
+            <h2 class="text-lg font-bold text-gray-700 mb-4 flex items-center gap-2">
+                <span class="bg-pink-100 text-pink-600 w-8 h-8 flex items-center justify-center rounded-full text-sm">1</span>
+                ตั้งค่าข้อมูลพื้นฐาน
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="label-text">ชื่อผู้ปฏิบัติงาน</label>
+                    <select id="userName" class="input-pastel">
+                        <option>นายกันตพงศ์   วงศ์เอนกเกษม</option>
+                        <option>นางนิตยา  ภาพสมุทร</option>
+                        <option>น.ส.รัตติยาพร แก้วสุ</option>
+                        <option>น.ส.จิราพร คำแก้ว</option>
+                        <option>น.ส.อัจฉรา ภัทรสมสกุล</option>
+                        <option>น.ส.อาทิตยา วงศาโรจน์</option>
+                        <option>น.ส.จุติพร ร่วมใจ</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="label-text">ประจำเดือน / ปี พ.ศ.</label>
+                    <div class="flex gap-2">
+                        <select id="monthSelect" class="input-pastel w-1/2"></select>
+                        <select id="yearSelect" class="input-pastel w-1/2"></select>
+                    </div>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="label-text">เป้าหมายคะแนนรวม (แต้ม)</label>
+                    <div class="flex items-center gap-2">
+                        <input type="number" id="targetScore" class="input-pastel" placeholder="เช่น 1600 (ปล่อยว่างเพื่อคำนวณอัตโนมัติตามวันทำงาน)">
+                        <span class="text-xs text-gray-400">*ระบบจะเกลี่ยคะแนนให้ใกล้เคียงเป้าหมายที่สุด</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<label>หัวหน้างาน</label>
-<select id="chief">
-<option>ภญ.นิตยา ภาพสมุทร</option>
-<option>ภญ.อาทิตยา วงศาโรจน์</option>
-<option value="">พิมพ์เอง</option>
-</select>
-<input id="chiefCustom" placeholder="ชื่ออื่น">
+        <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold text-gray-700 flex items-center gap-2">
+                    <span class="bg-pink-100 text-pink-600 w-8 h-8 flex items-center justify-center rounded-full text-sm">2</span>
+                    ตารางเวรปฏิบัติงาน
+                </h2>
+                <button onclick="generateTable()" class="text-sm text-gray-500 hover:text-pink-600 underline">Reset ตาราง</button>
+            </div>
+            
+            <div class="overflow-x-auto border rounded-xl">
+                <table class="w-full text-sm text-left whitespace-nowrap">
+                    <thead class="bg-pink-50 text-pink-700">
+                        <tr>
+                            <th class="p-4 text-center w-20">วันที่</th>
+                            <th class="p-4 w-32">สถานะ</th>
+                            <th class="p-4 w-48">หน้าที่พิเศษ</th>
+                            <th class="p-4">กิจกรรมวิชาการ (ติ๊กเพิ่ม)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dayTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-<label>เดือน/ปี</label>
-<input type="month" id="month" onchange="buildCalendar()">
-</section>
+    <div class="fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur border-t p-4 shadow-lg z-50 flex justify-center items-center gap-4">
+        <div id="statusMessage" class="text-sm font-semibold text-gray-600 hidden">กำลังประมวลผล...</div>
+        <button onclick="processAndDownload()" class="btn-primary flex items-center gap-2 shadow-xl hover:shadow-2xl transform transition hover:-translate-y-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+            </svg>
+            <span class="text-lg">สร้างไฟล์ Excel</span>
+        </button>
+    </div>
 
-<div id="calendar"></div>
-
-<div class="actions">
-<button onclick="calculate()">คำนวณคะแนน</button>
-<button onclick="exportPDF()">Export PDF</button>
-</div>
-
-<div id="summary"></div>
-
-<div id="footerText">
-<p>
-ข้าพเจ้าได้ปฏิบัติงานบริบาลเภสัชกรรมผู้ป่วยนอกและงานที่เกี่ยวข้องตามที่ระบุข้างต้นครบถ้วน
-เป็นไปตามภาระงานที่ได้รับมอบหมายจริง และเป็นข้อมูลที่ถูกต้อง
-</p>
-</div>
-
-<script src="js/data.js"></script>
-<script src="js/app.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
+
