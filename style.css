@@ -1,13 +1,63 @@
-
-body{font-family:sans-serif;background:#f7f8fc;padding:20px}
-h1{color:#6b7cff}
-.header label{margin-right:6px}
-.day{border:1px solid #ccc;background:#fff;padding:8px;margin:6px 0}
-.weekend{background:#eee}
-.table{width:100%;border-collapse:collapse;margin-top:10px}
-.table td,.table th{border:1px solid #000;padding:4px;font-size:12px}
-#footerText{margin-top:20px;font-size:12px}
-@media print{
- button{display:none}
- body{background:#fff}
+body {
+    font-family: 'Sarabun', sans-serif;
 }
+
+.input-pastel {
+    border: 2px solid #fce7f3;
+    border-radius: 12px;
+    padding: 10px 14px;
+    width: 100%;
+    transition: all 0.2s;
+    outline: none;
+    color: #4b5563;
+    background-color: #fff1f2;
+}
+
+.input-pastel:focus {
+    border-color: #ec4899;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+}
+
+.label-text {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #db2777;
+    margin-bottom: 4px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+    color: white;
+    padding: 12px 32px;
+    border-radius: 50px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #fbcfe8;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #f472b6;
+}
+
+.row-hover:hover {
+    background-color: #fff1f2;
+}
+.row-disabled {
+    background-color: #f3f4f6;
+    opacity: 0.6;
+}
+
