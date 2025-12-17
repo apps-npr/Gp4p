@@ -17,11 +17,11 @@ const TASKS = {
     '2.13': { row: 23, min: 0, max: 1, time: 20, default: true },  // Tertiary
     '2.14': { row: 24, min: 0, max: 1, time: 150, default: true }, // Primary (Minimal)
     // Academic (3.x)
-    '3.1': { row: 28, val: 1, time: 120 }, // SOAP
-    '3.2': { row: 29, val: 1, time: 120 }, // JC
-    '3.3': { row: 30, val: 1, time: 60 },  // แนะนำ
-    '3.4': { row: 31, val: 1, time: 60 },  // สอน
-    '3.5': { row: 32, val: 1, time: 60 }   // สรุป
+    '3.1': { row: 30, val: 1, time: 120 }, // SOAP
+    '3.2': { row: 31, val: 1, time: 120 }, // JC
+    '3.3': { row: 32, val: 1, time: 60 },  // แนะนำ
+    '3.4': { row: 33, val: 1, time: 60 },  // สอน
+    '3.5': { row: 34, val: 1, time: 60 }   // สรุป
 };
 
 const MONTHS = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
