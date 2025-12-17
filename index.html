@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>P4P Ambulatory Care – Final v2</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<h1>P4P Ambulatory Care (Final v2)</h1>
+
+<section class="header">
+<label>ผู้ปฏิบัติงาน</label>
+<select id="staff">
+<option>ภญ.นิตยา ภาพสมุทร</option>
+<option>ภญ.รัตติยาพร แก้วสุ</option>
+<option>ภญ.จิราพร คำแก้ว</option>
+<option>ภญ.อัจฉรา ภัทรสมสกุล</option>
+<option>ภญ.อาทิตยา วงศาโรจน์</option>
+<option>ภญ.จุติพร ร่วมใจ</option>
+<option>ภก.กันตพงศ์ วงศ์เอนกเกษม</option>
+<option value="">พิมพ์เอง</option>
+</select>
+<input id="staffCustom" placeholder="ชื่ออื่น">
+
+<label>หัวหน้างาน</label>
+<select id="chief">
+<option>ภญ.นิตยา ภาพสมุทร</option>
+<option>ภญ.อาทิตยา วงศาโรจน์</option>
+<option value="">พิมพ์เอง</option>
+</select>
+<input id="chiefCustom" placeholder="ชื่ออื่น">
+
+<label>เดือน/ปี</label>
+<input type="month" id="month" onchange="buildCalendar()">
+</section>
+
+<div id="calendar"></div>
+
+<div class="actions">
+<button onclick="calculate()">คำนวณคะแนน</button>
+<button onclick="exportPDF()">Export PDF</button>
+</div>
+
+<div id="summary"></div>
+
+<div id="footerText">
+<p>
+ข้าพเจ้าได้ปฏิบัติงานบริบาลเภสัชกรรมผู้ป่วยนอกและงานที่เกี่ยวข้องตามที่ระบุข้างต้นครบถ้วน
+เป็นไปตามภาระงานที่ได้รับมอบหมายจริง และเป็นข้อมูลที่ถูกต้อง
+</p>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
