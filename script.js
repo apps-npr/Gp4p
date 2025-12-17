@@ -2,26 +2,26 @@
 // Mapping Task ID กับ Row Number ใน Excel (อิงตามไฟล์ที่ส่งมา)
 // Row 1 ใน ExcelJS คือ Row 1 ใน Excel จริงๆ (1-based index)
 const TASKS = {
-    '2.1': { row: 14, min: 40, max: 70, time: 2, default: false }, // จ่ายยา OPD
-    '2.2': { row: 15, min: 40, max: 70, time: 2.5, default: false }, // Check ยา
-    '2.3': { row: 16, min: 1, max: 5, time: 5, default: true },    // ประสานงาน
-    '2.4': { row: 17, min: 1, max: 5, time: 15, default: true },   // ADR
-    '2.5': { row: 18, min: 0, max: 4, time: 3, default: true },    // DIS
-    '2.6': { row: 19, min: 0, max: 5, time: 15, default: true },   // Counsel New
-    '2.7': { row: 20, min: 2, max: 6, time: 8, default: true },    // Counsel Tech
-    '2.8': { row: 21, min: 2, max: 6, time: 10, default: true },   // Warfarin
-    '2.9': { row: 22, min: 1, max: 3, time: 10, default: false },  // TB (Thu)
-    '2.10': { row: 23, min: 1, max: 5, time: 10, default: true },  // CDCU
-    '2.11': { row: 24, min: 7, max: 10, time: 10, default: false },// Asthma (Thu)
-    '2.12': { row: 25, min: 16, max: 20, time: 10, default: false },// HIV (Wed)
-    '2.13': { row: 26, min: 0, max: 1, time: 20, default: true },  // Tertiary
-    '2.14': { row: 27, min: 0, max: 1, time: 150, default: true }, // Primary (Minimal)
+    '2.1': { row: 11, min: 40, max: 70, time: 2, default: false }, // จ่ายยา OPD
+    '2.2': { row: 12, min: 40, max: 70, time: 2.5, default: false }, // Check ยา
+    '2.3': { row: 13, min: 1, max: 5, time: 5, default: true },    // ประสานงาน
+    '2.4': { row: 14, min: 1, max: 5, time: 15, default: true },   // ADR
+    '2.5': { row: 15, min: 0, max: 4, time: 3, default: true },    // DIS
+    '2.6': { row: 16, min: 0, max: 5, time: 15, default: true },   // Counsel New
+    '2.7': { row: 17, min: 2, max: 6, time: 8, default: true },    // Counsel Tech
+    '2.8': { row: 18, min: 2, max: 6, time: 10, default: true },   // Warfarin
+    '2.9': { row: 19, min: 1, max: 3, time: 10, default: false },  // TB (Thu)
+    '2.10': { row: 20, min: 1, max: 5, time: 10, default: true },  // CDCU
+    '2.11': { row: 21, min: 7, max: 10, time: 10, default: false },// Asthma (Thu)
+    '2.12': { row: 22, min: 16, max: 20, time: 10, default: false },// HIV (Wed)
+    '2.13': { row: 23, min: 0, max: 1, time: 20, default: true },  // Tertiary
+    '2.14': { row: 24, min: 0, max: 1, time: 150, default: true }, // Primary (Minimal)
     // Academic (3.x)
-    '3.1': { row: 31, val: 1, time: 120 }, // SOAP
-    '3.2': { row: 32, val: 1, time: 120 }, // JC
-    '3.3': { row: 33, val: 1, time: 60 },  // แนะนำ
-    '3.4': { row: 34, val: 1, time: 60 },  // สอน
-    '3.5': { row: 35, val: 1, time: 60 }   // สรุป
+    '3.1': { row: 28, val: 1, time: 120 }, // SOAP
+    '3.2': { row: 29, val: 1, time: 120 }, // JC
+    '3.3': { row: 30, val: 1, time: 60 },  // แนะนำ
+    '3.4': { row: 31, val: 1, time: 60 },  // สอน
+    '3.5': { row: 32, val: 1, time: 60 }   // สรุป
 };
 
 const MONTHS = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
