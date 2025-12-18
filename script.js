@@ -85,7 +85,7 @@ function generateTable() {
             </td>
             <td class="p-4">
                 <select class="location-select input-pastel p-2 text-sm">
-                    <option value="normal">เวรปกติ (ห้องยา)</option>
+                    <option value="normal">เวรร่มขาว</option>
                     <option value="floor2">เวรชั้น 2</option>
                     <option value="bigDispense">จ่ายยาใหญ่</option>
                     <option value="helper">ช่วยห้องยา</option>
